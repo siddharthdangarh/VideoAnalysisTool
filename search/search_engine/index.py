@@ -1,6 +1,10 @@
-import numpy as np
 import faiss
+import logging
+import numpy as np
 from sentence_transformers import SentenceTransformer
+
+logger = logging.getLogger(__name__)
+
 
 class VideoSearchEngine:
     def __init__(self, chunks: list):

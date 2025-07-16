@@ -1,61 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Something Went Wrong</title>
-    <style>
-        body {
-            background: linear-gradient(135deg, #f8fafc 0%, #e0e7ef 100%);
-            color: #2d3748;
-            font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
-        }
-        .error-container {
-            background: #fff;
-            padding: 2.5rem 2rem;
-            border-radius: 1.25rem;
-            box-shadow: 0 4px 24px rgba(44, 62, 80, 0.08);
-            text-align: center;
-            max-width: 350px;
-        }
-        .error-title {
-            font-size: 2.2rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            color: #3b4252;
-        }
-        .error-message {
-            font-size: 1.1rem;
-            margin-bottom: 1.5rem;
-            color: #6b7280;
-        }
-        .back-btn {
-            display: inline-block;
-            padding: 0.6rem 1.2rem;
-            background: #4f8cff;
-            color: #fff;
-            border: none;
-            border-radius: 0.5rem;
-            font-size: 1rem;
-            text-decoration: none;
-            transition: background 0.2s;
-        }
-        .back-btn:hover {
-            background: #2563eb;
-        }
-    </style>
-</head>
-<body>
-    <div class="error-container">
-        <div class="error-title">Oops!</div>
-        <div class="error-message">Something went wrong.<br>Please try again later.</div>
-        <a href="/" class="back-btn">Go Home</a>
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 to-blue-100">
+    <div class="bg-white/80 backdrop-blur-md shadow-xl rounded-2xl px-8 py-10 max-w-sm w-full text-center">
+        <h1 class="text-3xl font-bold text-blue-900 mb-2">Oops!</h1>
+        <p class="text-lg text-slate-600 mb-6">Something went wrong.<br>Please try again later.</p>
+        <a href="/search/" class="inline-block px-5 py-2 bg-blue-600 text-white rounded-lg font-medium shadow hover:bg-blue-700 transition">Go Home</a>
     </div>
-</body>
-</html>
+</div>
+{% endblock content %}

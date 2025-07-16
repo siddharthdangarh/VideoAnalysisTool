@@ -4,6 +4,7 @@ from django.http import JsonResponse
 from django.shortcuts import render
 from rest_framework.views import APIView
 
+from search.dummy.video_transcript import DUMMY_TRANSCRIPT
 from search.models import VideoFile
 from search.search_engine.index import VideoSearchEngine
 
@@ -30,8 +31,11 @@ class SearchView(APIView):
             if not video_file_id:
                 return JsonResponse({"error": "No video file id provided"}, status=400)
 
-            video_file = VideoFile.objects.get(video_file_id=video_file_id)
-            chunks = video_file.chunks
+            if video_file_id == "HARDCODED-VIDEO-FILE-ID":
+                chunks = DUMMY_TRANSCRIPT
+            else:
+                video_file = VideoFile.objects.get(video_file_id=video_file_id)
+                chunks = video_file.chunks
 
             search_engine = VideoSearchEngine(chunks)
             
