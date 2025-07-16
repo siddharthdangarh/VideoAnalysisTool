@@ -40,3 +40,8 @@ python manage.py makemigrations
 python manage.py migrate
 ```
 
+After running the django server, you can access the page to input user query via this url
+```
+http://localhost:8000/search/
+```
+
