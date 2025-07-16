@@ -10,22 +10,37 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
+import os
+import time
+from datetime import timedelta
 from pathlib import Path
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+import environ
 
+# get root of the project, where .env file is present
+env_file_location = environ.Path(__file__) - 2
+env = environ.Env()
+environ.Env.read_env(os.path.join(env_file_location, ".env"))
+
+# Build paths inside the project like this: BASE_DIR / 'subdir'.
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
+# See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-0gq%h208)^4z#+cu45!&a_tj7thv@m#elr)89hqtp&@z5=vl@!'
+SECRET_KEY = env.str("DJANGO_SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env.bool("DEBUG")
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    env.str("BASE_URL").replace("https://", "").replace("http://", ""),
+    'localhost',
+    '127.0.0.1',
+]
+
+BASE_URL = env.str("BASE_URL")
 
 
 # Application definition
@@ -37,6 +52,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # Django Apps
+    'common',
+    'search',
 ]
 
 MIDDLEWARE = [
@@ -54,7 +73,7 @@ ROOT_URLCONF = 'VideoAnalysisTool.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'template')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -75,7 +94,7 @@ WSGI_APPLICATION = 'VideoAnalysisTool.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
 
@@ -116,7 +135,61 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+# Additional locations of static files
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Add your ngrok domain to CSRF_TRUSTED_ORIGINS
+CSRF_TRUSTED_ORIGINS = [
+    BASE_URL,
+    'http://localhost:8000',
+    'http://127.0.0.1:8000'
+]
+
+# If you're using CORS headers, you might also want to add:
+CORS_ALLOWED_ORIGINS = [
+    'https://*.ngrok-free.app',
+    'http://localhost:8000',
+    'http://127.0.0.1:8000'
+]
+CORS_ALLOW_CREDENTIALS = True
+
+log_file = time.strftime("%Y-%m-%d")
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {
+        "file": {
+            "level": "INFO",
+            "class": "logging.handlers.RotatingFileHandler",
+            "filename": BASE_DIR + "/logs/" + log_file + ".log",
+            "formatter": "verbose",
+            "maxBytes": 1024 * 1024 * 100,
+            "backupCount": 10,
+        },
+    },
+    "loggers": {
+        "": {
+            "handlers": ["file"],
+            "level": "INFO",
+            "propagate": True,
+        },
+    },
+    "formatters": {
+        "verbose": {
+            "format": "%(asctime)s [%(module)s | %(levelname)s] %(message)s @ %(pathname)s : %(lineno)d : %(funcName)s",
+        },
+        "simple": {
+            "format": "{levelname} {message}",
+            "style": "{",
+        },
+    },
+}

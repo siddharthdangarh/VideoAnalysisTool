@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Something Went Wrong</title>
+    <style>
+        body {
+            background: linear-gradient(135deg, #f8fafc 0%, #e0e7ef 100%);
+            color: #2d3748;
+            font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .error-container {
+            background: #fff;
+            padding: 2.5rem 2rem;
+            border-radius: 1.25rem;
+            box-shadow: 0 4px 24px rgba(44, 62, 80, 0.08);
+            text-align: center;
+            max-width: 350px;
+        }
+        .error-title {
+            font-size: 2.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #3b4252;
+        }
+        .error-message {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            color: #6b7280;
+        }
+        .back-btn {
+            display: inline-block;
+            padding: 0.6rem 1.2rem;
+            background: #4f8cff;
+            color: #fff;
+            border: none;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            text-decoration: none;
+            transition: background 0.2s;
+        }
+        .back-btn:hover {
+            background: #2563eb;
+        }
+    </style>
+</head>
+<body>
+    <div class="error-container">
+        <div class="error-title">Oops!</div>
+        <div class="error-message">Something went wrong.<br>Please try again later.</div>
+        <a href="/" class="back-btn">Go Home</a>
+    </div>
+</body>
+</html>

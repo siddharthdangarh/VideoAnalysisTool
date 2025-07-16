@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Video Analysis Tool{% endblock title %}</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Tailwind Configuration -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    // Add your custom configurations here
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+    <!-- Main content container -->
+    <div class="min-h-screen">
+        {% block content %}
+        <!-- Child templates will insert their content here -->
+        {% endblock content %}
+    </div>
+</body>
+</html>
