@@ -39,9 +39,10 @@ class SearchView(APIView):
 
             search_engine = VideoSearchEngine(chunks)
             
-            result = search_engine.search(query, top_k=1)[0]
-            if not result:
+            results = search_engine.search(query, top_k=1)
+            if not results or len(results) == 0:
                 return JsonResponse({"error": "No result found"}, status=400)
+            result = results[0]
 
             return JsonResponse({
                 "video": result["video_id"],

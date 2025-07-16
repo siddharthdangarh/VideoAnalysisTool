@@ -64,7 +64,7 @@ chatForm.addEventListener('submit', async function(e) {
         if (data.error) {
             appendMessage('bot', 'Error: ' + data.error);
         } else {
-            appendMessage('bot', data.video ? `Relevant video segment: ${data.video}` : 'No result found.');
+            appendMessage('bot', data.video ? `Relevant video segment: Video ID - ${data.video}, Timestamp - ${data.timestamp}, Text - ${data.text}` : 'No result found.');
         }
     } catch (err) {
         chatMessages.removeChild(chatMessages.lastChild);

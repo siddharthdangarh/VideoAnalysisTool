@@ -8,11 +8,12 @@ logger = logging.getLogger(__name__)
 
 class VideoSearchEngine:
     def __init__(self, chunks: list):
-        self.model = SentenceTransformer("all-MiniLM-L6-v2")
-        self.index = self._build_index(chunks)
+        self.model = SentenceTransformer("all-MiniLM-L6-v2")    
+        self.chunks = chunks
+        self.index = self._build_index()
 
-    def _build_index(self, chunks: list):
-        texts = [chunk["text"] for chunk in chunks]
+    def _build_index(self):
+        texts = [chunk["text"] for chunk in self.chunks]
         embeddings = self.model.encode(texts, convert_to_numpy=True)
         self.embeddings = embeddings  # store for lookup
         dim = embeddings.shape[1]
